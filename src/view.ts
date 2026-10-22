@@ -1587,9 +1587,14 @@ export class TaskCenterView extends ItemView {
 
     if (area.onDrop?.clearScheduled) {
       parent.dataset.dropZone = "unscheduled-tray";
-      this.makeDropZone(parent, null);
+      this.makeDropZone(parent, null, "scheduled");
+    } else if (area.onDrop?.clearDeadline) {
+      parent.dataset.dropZone = "unscheduled-tray";
+      this.makeDropZone(parent, null, "deadline");
     } else if (area.onDrop?.setScheduled) {
-      this.makeDropZone(parent, area.onDrop.setScheduled);
+      this.makeDropZone(parent, area.onDrop.setScheduled, "scheduled");
+    } else if (area.onDrop?.setDeadline) {
+      this.makeDropZone(parent, area.onDrop.setDeadline, "deadline");
     } else if (area.onDrop?.setStatus) {
       this.wireTrashDropTarget(parent, area.onDrop.setStatus);
     }
@@ -1615,7 +1620,7 @@ export class TaskCenterView extends ItemView {
       }
       // 未排期 tray 为空时显示「没有未排期任务」，让空托盘仍是可见的可投放区，
       // 而不是整块消失（US-122a）。
-      if (area.onDrop?.clearScheduled) {
+      if (area.onDrop?.clearScheduled || area.onDrop?.clearDeadline) {
         wrap.createDiv({ text: tr("area.emptyTray"), cls: "bt-empty bt-tray-empty" });
         return;
       }
@@ -1806,7 +1811,9 @@ export class TaskCenterView extends ItemView {
           return;
         }
         const task = this.tasks.find((t) => t.id === id);
-        const useDeadline = this.plugin.settings.primaryDateField === "deadline";
+        const useDeadline = field
+          ? field === "deadline"
+          : this.plugin.settings.primaryDateField === "deadline";
         // US-122a: when clearing schedule via tray and the task's effective
         // schedule is inherited from a parent (no own ⏳), warn the user
         // instead of silently no-oping. Inherited schedules cannot be
