@@ -164,9 +164,14 @@ export function validateAreaDrop(type: string, raw: unknown): QueryFieldIssue[] 
   }
   if (type !== "list" && type !== "grid") return [{ field: "onDrop", rule: "unsupported" }];
   if ("setStatus" in raw && (raw.setStatus === "done" || raw.setStatus === "dropped")) return [];
-  if (raw.clearScheduled === true) return [];
+if (raw.clearScheduled === true) return [];
   if (typeof raw.setScheduled === "string") {
     const token = raw.setScheduled.trim();
+    if (["today", "tomorrow", "next-week"].includes(token) || isQueryDate(token)) return [];
+  }
+  if (raw.clearDeadline === true) return [];
+  if (typeof raw.setDeadline === "string") {
+    const token = raw.setDeadline.trim();
     if (["today", "tomorrow", "next-week"].includes(token) || isQueryDate(token)) return [];
   }
   return [{ field: `onDrop.${Object.keys(raw)[0]}`, rule: "dropAction" }];
