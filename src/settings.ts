@@ -92,7 +92,21 @@ export class TaskCenterSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl).setName(tr("settings.groupGeneral")).setHeading();
-
+    
+    new Setting(containerEl)  
+      .setName(tr("settings.primaryDateField.name"))  
+      .setDesc(tr("settings.primaryDateField.desc"))  
+      .addDropdown((dd) =>  
+        dd  
+          .addOption("scheduled", tr("settings.primaryDateField.scheduled"))  
+          .addOption("deadline", tr("settings.primaryDateField.deadline"))  
+          .setValue(this.plugin.settings.primaryDateField)  
+          .onChange(async (v) => {  
+            this.plugin.settings.primaryDateField = v === "deadline" ? "deadline" : "scheduled";  
+            await this.plugin.saveSettings();  
+          }),  
+      );
+    
     new Setting(containerEl)
       .setName(tr("settings.weekStart.name"))
       .setDesc(tr("settings.weekStart.desc"))
