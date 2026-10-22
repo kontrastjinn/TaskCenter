@@ -43,9 +43,9 @@ const EN = {
   "savedViews.timeDropped": "Dropped",
   "savedViews.dateNotOverdue": "Not overdue (including no deadline)",
   // Adding configurable date datum ❬due❭ or ❬scheduled❭
-  "settings.primaryDateField.name": "Primary date field",  
-  "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
-  "settings.primaryDateField.scheduled": "Scheduled (⏳)",  
+  "settings.primaryDateField.name": "Primary date field",
+  "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",
+  "settings.primaryDateField.scheduled": "Scheduled (⏳)",
   "settings.primaryDateField.deadline": "Due (📅)",
 
   // View tabs
@@ -567,11 +567,6 @@ const ZH: Partial<typeof EN> = {
   "dsl.sort": "{path} 必须是支持的排序 token 数组。",
   "savedViews.timeDropped": "放弃于",
   "savedViews.dateNotOverdue": "未逾期（含无截止）",
-  // Adding configurable date datum ❬due❭ or ❬scheduled❭
-  "settings.primaryDateField.name": "Primary date field",  
-  "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
-  "settings.primaryDateField.scheduled": "Scheduled (⏳)",  
-  "settings.primaryDateField.deadline": "Due (📅)",
 
   "tab.today": "今日",
   "tab.week": "本周",
