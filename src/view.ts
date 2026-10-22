@@ -1455,7 +1455,10 @@ export class TaskCenterView extends ItemView {
   private renderViewLayout(parent: HTMLElement): void {
     // Render from the draft-merged preset so per-area `when` edits take effect.
     const active = this.effectiveSavedView();
-    const layout: LayoutNode = active.view?.layout ?? { type: "list" };
+    const rawLayout: LayoutNode = active.view?.layout ?? { type: "list" };
+    const layout = this.plugin.settings.primaryDateField === "deadline"
+      ? remapScheduledToDeadline(rawLayout)
+      : rawLayout;
     const root = parent.createDiv({ cls: "bt-view-root" });
     // Tag the view root with the legacy tab name (today/week/month/…) so stable
     // e2e selectors like `[data-view="today"]` keep resolving after the layout
