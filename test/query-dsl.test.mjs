@@ -804,6 +804,16 @@ test('US-219: list/grid onDrop accepts exactly one supported action', () => {
   }
 });
 
+test('US-109i/US-109t: dropped date survives round-trip and retired density is ignored on load', () => {
+  const preset = parseQueryDsl(JSON.stringify({ name: 'Dropped', view: { layout: { type: 'list', when: { time: { dropped: 'today' } } } } }));
+  assert.equal(JSON.parse(stringifyQueryPreset(preset)).view.layout.when.time.dropped, 'today');
+  const loaded = normalizeQueryPreset({ name: 'Old', view: { layout: { type: 'month', density: 'compact' } } });
+  assert.equal(loaded.view.layout.density, undefined);
+  assert.throws(() => parseQueryDsl(JSON.stringify({ name: 'New', view: { layout: { type: 'month', density: 'compact' } } })), /density/);
+});
+test('US-217a: legacy fields mixed with layout are rejected', () => {
+  assert.throws(() => parseQueryDsl(JSON.stringify({ name: 'Mixed', view: { type: 'week', layout: { type: 'list' } } })), /view.layout/);
+});
 
 test('US-219: DSL diagnostics follow the current Obsidian language', () => {
   try {
