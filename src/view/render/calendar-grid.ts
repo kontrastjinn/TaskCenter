@@ -36,18 +36,22 @@ export function deadlineRiskStats<T extends {
 // once per rendered day (7× for week, up to 42× for month) — an O(days × N)
 // sweep that added up on mobile. Tasks failing `accept` or without a
 // scheduled day are skipped; per-day order preserves the input order.
-export function bucketByScheduledDay<T extends { effectiveScheduled: string | null }>(
-  tasks: T[],
-  accept: (t: T) => boolean,
-): Map<string, T[]> {
-  const buckets = new Map<string, T[]>();
-  for (const t of tasks) {
-    if (!t.effectiveScheduled || !accept(t)) continue;
-    const bucket = buckets.get(t.effectiveScheduled);
-    if (bucket) bucket.push(t);
-    else buckets.set(t.effectiveScheduled, [t]);
-  }
-  return buckets;
+export function bucketByScheduledDay<  
+  T extends { effectiveScheduled: string | null; effectiveDeadline: string | null },  
+>(  
+  tasks: T[],  
+  accept: (t: T) => boolean,  
+  field: "scheduled" | "deadline" = "scheduled",  
+): Map<string, T[]> {  
+  const buckets = new Map<string, T[]>();  
+  for (const t of tasks) {  
+    const day = field === "deadline" ? t.effectiveDeadline : t.effectiveScheduled;  
+    if (!day || !accept(t)) continue;  
+    const bucket = buckets.get(day);  
+    if (bucket) bucket.push(t);  
+    else buckets.set(day, [t]);  
+  }  
+  return buckets;  
 }
 
 // The 7 ISO days of the week containing `anchorISO`, aligned to `weekStartsOn`.
