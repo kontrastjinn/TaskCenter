@@ -425,12 +425,28 @@ function validateLayoutNode(raw: unknown, errors: QueryPresetValidationError[], 
   }
 }
 
-/** 深度优先收集布局树里所有 area 叶子（顺序 = 渲染顺序）。 */
-export function collectAreas(layout: LayoutNode): AreaConfig[] {
-  if (isStackLayout(layout)) {
-    return layout.children.flatMap((c) => collectAreas(c));
+// Recursively clone the layout, remapping the "unscheduled bank" semantics
+// from scheduled → deadline so the bank reflects missing DUE dates when
+// primaryDateField === "deadline". Pure; returns a new tree.
+export function remapScheduledToDeadline(node: LayoutNode): LayoutNode {
+  if (isStackLayout(node)) {
+    return { ...node, children: node.children.map(remapScheduledToDeadline) };
   }
-  return [layout];
+  const area = { ...node } as AreaConfig;
+  // 1. when.time: scheduled: "unscheduled" → deadline: "unscheduled"
+  if (area.when?.time?.scheduled === "unscheduled") {
+    const time = { ...area.when.time };
+    delete time.scheduled;
+    time.deadline = "unscheduled";              // see collision caveat below
+    area.when = { ...area.when, time };
+  }
+  // 2. onDrop: clearScheduled → clearDeadline, setScheduled → setDeadline
+  if (area.onDrop?.clearScheduled) {
+    area.onDrop = { clearDeadline: true };
+  } else if (area.onDrop?.setScheduled) {
+    area.onDrop = { setDeadline: area.onDrop.setScheduled };
+  }
+  return area;
 }
 
 function isStackLayout(node: LayoutNode): node is StackConfig {
