@@ -43,15 +43,15 @@ export function bucketByScheduledDay<
   accept: (t: T) => boolean,  
   field: "scheduled" | "deadline" = "scheduled",  
 ): Map<string, T[]> {  
-  const buckets = new Map<string, T[]>();  
+  const buckets = new Map<string, T[]>();
   for (const t of tasks) {  
-    const day = field === "deadline" ? t.effectiveDeadline : t.effectiveScheduled;  
-    if (!day || !accept(t)) continue;  
-    const bucket = buckets.get(day);  
-    if (bucket) bucket.push(t);  
-    else buckets.set(day, [t]);  
+    const day = field === "deadline" ? t.effectiveDeadline : t.effectiveScheduled;
+    if (!day || !accept(t)) continue;
+    const bucket = buckets.get(day);
+    if (bucket) bucket.push(t);
+    else buckets.set(day, [t]);
   }  
-  return buckets;  
+  return buckets;
 }
 
 // The 7 ISO days of the week containing `anchorISO`, aligned to `weekStartsOn`.
