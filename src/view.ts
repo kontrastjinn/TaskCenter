@@ -1805,15 +1805,15 @@ export class TaskCenterView extends ItemView {
         if (!id) return;
         e.preventDefault();
         el.removeClass("drop-hover");
-        const resolvedDate = targetDate === null ? null : resolveScheduledDropDate(targetDate);
-        if (resolvedDate === undefined) {
-          new Notice(tr("dsl.date", { path: "onDrop.setScheduled" }), 4000);
-          return;
-        }
-        const task = this.tasks.find((t) => t.id === id);
         const useDeadline = field
           ? field === "deadline"
           : this.plugin.settings.primaryDateField === "deadline";
+        const resolvedDate = targetDate === null ? null : resolveScheduledDropDate(targetDate);
+        if (resolvedDate === undefined) {
+          new Notice(tr("dsl.date", { path: useDeadline ? "onDrop.setDeadline" : "onDrop.setScheduled" }), 4000);
+          return;
+        }
+        const task = this.tasks.find((t) => t.id === id);
         // US-122a: when clearing schedule via tray and the task's effective
         // schedule is inherited from a parent (no own ⏳), warn the user
         // instead of silently no-oping. Inherited schedules cannot be
@@ -1826,7 +1826,7 @@ export class TaskCenterView extends ItemView {
           if (effDate) {
             new Notice(tr(useDeadline ? "dnd.inheritedDeadline" : "dnd.inheritedSchedule"), 4000);
             return;
-          }  
+          }
         }
         const currentDate = useDeadline ? (task?.deadline ?? null) : (task?.scheduled ?? null);
         const willMove = !task || currentDate !== resolvedDate;
