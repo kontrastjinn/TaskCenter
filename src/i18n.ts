@@ -97,11 +97,9 @@ const EN = {
   "trash.title": "Abandon",
   "trash.hint": "Drop here to abandon",
   "trash.dropped": "Abandoned",
-  "dnd.inheritedSchedule":
-    "Schedule is inherited from parent; edit source or move out of parent first.",
+  "dnd.inheritedSchedule": "Schedule is inherited from parent; edit source or move out of parent first.",
   "dnd.droppedUndo": "dropped",
-  "dnd.inheritedDeadline": 
-    "Deadline is inherited from parent; edit source or move out of parent first.",
+  "dnd.inheritedDeadline": "Deadline is inherited from parent; edit source or move out of parent first.",
 
   // US-504: mobile month tab uses calendar-grid + dot density + tap-day
   // inline day panel listing the day's tasks. This empty-state string powers
