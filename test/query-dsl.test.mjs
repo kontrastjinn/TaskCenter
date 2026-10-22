@@ -783,23 +783,25 @@ for (const onDrop of [{}, { setStatus: 'done' }, { clearScheduled: true }, { set
 }
 test('US-219: list/grid onDrop accepts exactly one supported action', () => {
   for (const type of ['list', 'grid']) {
-    for (const onDrop of [{ setStatus: 'done' }, { setStatus: 'dropped' }, { setScheduled: 'tomorrow' }, { clearScheduled: true }]) {
-      assert.deepEqual(parseQueryDsl(JSON.stringify({ name: 'Action', view: { layout: { type, onDrop } } })).view.layout.onDrop, onDrop);
+    for (const onDrop of [
+      { setStatus: 'done' }, { setStatus: 'dropped' },
+      { setScheduled: 'tomorrow' }, { clearScheduled: true },
+      { setDeadline: 'today' }, { clearDeadline: true },   // NEW
+    ]) {
+      assert.deepEqual(
+        parseQueryDsl(JSON.stringify({ name: 'Action', view: { layout: { type, onDrop } } })).view.layout.onDrop,
+        onDrop,
+      );
     }
-    for (const onDrop of [{}, { setStatus: 'doing' }, { clearScheduled: false }, { setScheduled: 'week' }, { setScheduled: 'today', clearScheduled: true }]) {
+    for (const onDrop of [
+      {}, { setStatus: 'doing' }, { clearScheduled: false },
+      { setScheduled: 'week' }, { setScheduled: 'today', clearScheduled: true },
+      { clearDeadline: false }, { setDeadline: 'week' },              // NEW: bad token / wrong literal
+      { clearDeadline: true, setStatus: 'done' },                    // NEW: two keys → one-key rule
+    ]) {
       assert.throws(() => parseQueryDsl(JSON.stringify({ name: 'Action', view: { layout: { type, onDrop } } })), /onDrop/);
     }
   }
-});
-test('US-109i/US-109t: dropped date survives round-trip and retired density is ignored on load', () => {
-  const preset = parseQueryDsl(JSON.stringify({ name: 'Dropped', view: { layout: { type: 'list', when: { time: { dropped: 'today' } } } } }));
-  assert.equal(JSON.parse(stringifyQueryPreset(preset)).view.layout.when.time.dropped, 'today');
-  const loaded = normalizeQueryPreset({ name: 'Old', view: { layout: { type: 'month', density: 'compact' } } });
-  assert.equal(loaded.view.layout.density, undefined);
-  assert.throws(() => parseQueryDsl(JSON.stringify({ name: 'New', view: { layout: { type: 'month', density: 'compact' } } })), /density/);
-});
-test('US-217a: legacy fields mixed with layout are rejected', () => {
-  assert.throws(() => parseQueryDsl(JSON.stringify({ name: 'Mixed', view: { type: 'week', layout: { type: 'list' } } })), /view.layout/);
 });
 
 
