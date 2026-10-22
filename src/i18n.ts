@@ -42,6 +42,11 @@ const EN = {
   "dsl.sort": "{path} must be an array of supported sort tokens.",
   "savedViews.timeDropped": "Dropped",
   "savedViews.dateNotOverdue": "Not overdue (including no deadline)",
+  // Adding configurable date datum ❬due❭ or ❬scheduled❭
+  "settings.primaryDateField.name": "Primary date field",  
+  "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
+  "settings.primaryDateField.scheduled": "Scheduled (📅)",  
+  "settings.primaryDateField.deadline": "Due (⚓)",
 
   // View tabs
   "tab.today": "Today",
@@ -77,7 +82,7 @@ const EN = {
 
   // Unscheduled pool
   "pool.unscheduled": "Unscheduled",
-  "pool.hint": "⬆ Drag to week/month · drop here to clear ⏳",
+  "pool.hint": "⬆ Drag to week/month · drop here to clear 📅",
   "pool.other": "other",
 
   // Unscheduled big view
@@ -113,9 +118,9 @@ const EN = {
   "loading": "Loading tasks…",
   "onboarding.title": "No tasks yet",
   "onboarding.body":
-    "Create your first task: click + Add, or add a checkbox line in any note: `- [ ] My task #tag ⏳ tomorrow [estimate:: 30m]`.",
+    "Create your first task: click + Add, or add a checkbox line in any note: `- [ ] My task #tag 📅 tomorrow [estimate:: 30m]`.",
   "onboarding.mobileBody":
-    "Create your first task: tap + Add below, or write `- [ ] My task #tag ⏳ tomorrow [estimate:: 30m]` in any note.",
+    "Create your first task: tap + Add below, or write `- [ ] My task #tag 📅 tomorrow [estimate:: 30m]` in any note.",
   "onboarding.cta": "+ Add your first task",
   "completed.total": "total {actual}m",
 
@@ -128,7 +133,7 @@ const EN = {
     "long-press for menu · swipe left = done · swipe right = drop · drag to reschedule",
 
   // Notices
-  "notice.scheduled": "→ ⏳ {date}",
+  "notice.scheduled": "→ 📅 {date}",
   "notice.clearedSchedule": "removed schedule",
   "notice.error": "error: {msg}",
   "notice.reloaded": "Task Center: reloaded",
@@ -155,14 +160,14 @@ const EN = {
   // Quick add modal
   "qa.title": "Add task",
   "qa.placeholder":
-    "Buy groceries #tag ⏳ tomorrow [estimate:: 25m]",
+    "Buy groceries #tag 📅 tomorrow [estimate:: 25m]",
   "qa.hint":
-    "Dates resolve to ⏳ / 📅. Tags and inline fields stay exactly as typed.",
+    "Dates resolve to 📅 / ⚓. Tags and inline fields stay exactly as typed.",
   "qa.noDailyTarget": "Enable and configure Daily Notes to add tasks",
 
   // Date prompt
   "prompt.setScheduled":
-    'Set ⏳ for "{title}"  (YYYY-MM-DD, today, tomorrow, or blank to clear)',
+    'Set 📅 for "{title}"  (YYYY-MM-DD, today, tomorrow, or blank to clear)',
 
   // Commands
   "cmd.open": "Open Task Center",
@@ -200,7 +205,7 @@ const EN = {
   "settings.taskFormatFlavor.name": "Task format flavor",
   "settings.taskFormatFlavor.desc":
     "Read supports Tasks emoji and Dataview inline fields. New task metadata writes use this flavor.",
-  "settings.taskFormatFlavor.tasks": "Tasks emoji: ⏳ 📅 ➕ ✅",
+  "settings.taskFormatFlavor.tasks": "Tasks emoji: 📅 ⚓ ➕ ✅",
   "settings.taskFormatFlavor.dataview": "Dataview inline fields: [scheduled::] [due::]",
   "settings.groupTabs": "Query tabs",
   "settings.groupGeneral": "General",
@@ -255,15 +260,15 @@ const EN = {
 
   // Mobile task sheet labels (view.ts:openMobileTaskDetailSheet — the single
   // grouped sheet that both tap and long-press now open). `sheet.scheduleAt`
-  // formats a ⏳ button with an explicit ISO date; the date is opaque to the
+  // formats a 📅 button with an explicit ISO date; the date is opaque to the
   // translator (no language-specific reformatting) so EN and ZH share the
   // literal template.
   "sheet.markUndone": "↩ Mark undone",
   "sheet.done": "✓ Done",
-  "sheet.scheduleAt": "⏳ {date}",
+  "sheet.scheduleAt": "📅 {date}",
   "sheet.schedule": "Schedule",
   "sheet.reschedule": "Reschedule",
-  "sheet.scheduleClear": "⏳ —",
+  "sheet.scheduleClear": "📅 —",
   "sheet.tomorrow": "Tomorrow",
   "sheet.nextWeek": "Next week",
   "sheet.clearSchedule": "Clear schedule",
@@ -281,7 +286,7 @@ const EN = {
   "sheet.parentPickerInvalid": "Cannot choose this task or its descendants.",
   "sheet.parentPickerConfirm": "Set as subtask of “{title}”",
   "sheet.parentPickerNeedsSelection": "Choose a parent task",
-  "sheet.parentPickerEffect": "This clears this task’s own ⏳ and lets it inherit the parent schedule.",
+  "sheet.parentPickerEffect": "This clears this task’s own 📅 and lets it inherit the parent schedule.",
   "sheet.parentPickerChildren": "{n} subtasks",
   "sheet.editTag": "Edit tag",
   "sheet.editSource": "Edit source",
@@ -562,6 +567,11 @@ const ZH: Partial<typeof EN> = {
   "dsl.sort": "{path} 必须是支持的排序 token 数组。",
   "savedViews.timeDropped": "放弃于",
   "savedViews.dateNotOverdue": "未逾期（含无截止）",
+    // Adding configurable date datum ❬due❭ or ❬scheduled❭
+  "settings.primaryDateField.name": "Primary date field",  
+  "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
+  "settings.primaryDateField.scheduled": "Scheduled (📅)",  
+  "settings.primaryDateField.deadline": "Due (⚓)",
 
   "tab.today": "今日",
   "tab.week": "本周",
@@ -593,7 +603,7 @@ const ZH: Partial<typeof EN> = {
   "weekday.6": "六",
 
   "pool.unscheduled": "未排期",
-  "pool.hint": "⬆ 拖到周/月视图 · 拖到此处移除 ⏳",
+  "pool.hint": "⬆ 拖到周/月视图 · 拖到此处移除 📅",
   "pool.other": "其他",
 
   "unscheduled.hint":
@@ -621,9 +631,9 @@ const ZH: Partial<typeof EN> = {
   "loading": "加载任务中…",
   "onboarding.title": "还没有任务",
   "onboarding.body":
-    "创建第一条任务：点击 + 新建，或在任意笔记里写：`- [ ] 第一个任务 #tag ⏳ 明天 [estimate:: 30m]`。",
+    "创建第一条任务：点击 + 新建，或在任意笔记里写：`- [ ] 第一个任务 #tag 📅 明天 [estimate:: 30m]`。",
   "onboarding.mobileBody":
-    "创建第一条任务：点击下方 + 新建，或在任意笔记里写：`- [ ] 第一个任务 #tag ⏳ 明天 [estimate:: 30m]`。",
+    "创建第一条任务：点击下方 + 新建，或在任意笔记里写：`- [ ] 第一个任务 #tag 📅 明天 [estimate:: 30m]`。",
   "onboarding.cta": "+ 新建第一个任务",
   "completed.total": "总计 {actual}m",
 
@@ -634,7 +644,7 @@ const ZH: Partial<typeof EN> = {
   "footer.mobileHint":
     "长按弹菜单 · 左滑 = 完成 · 右滑 = 放弃 · 拖拽改期",
 
-  "notice.scheduled": "→ ⏳ {date}",
+  "notice.scheduled": "→ 📅 {date}",
   "notice.clearedSchedule": "已清除排期",
   "notice.error": "错误：{msg}",
   "notice.reloaded": "Task Center: 已刷新",
@@ -659,12 +669,12 @@ const ZH: Partial<typeof EN> = {
 
   "qa.title": "新建任务",
   "qa.placeholder":
-    "处理示例任务 #tag ⏳ 周六 [estimate:: 25m]",
+    "处理示例任务 #tag 📅 周六 [estimate:: 25m]",
   "qa.hint":
-    "日期会识别为 ⏳ / 📅；tag 与 inline field 原样保留。",
+    "日期会识别为 📅 / ⚓；tag 与 inline field 原样保留。",
   "qa.noDailyTarget": "请先启用并配置 Daily Notes 后再新建任务",
 
-  "prompt.setScheduled": '设置 ⏳ 给 "{title}"  (YYYY-MM-DD、today、tomorrow，留空清除)',
+  "prompt.setScheduled": '设置 📅 给 "{title}"  (YYYY-MM-DD、today、tomorrow，留空清除)',
 
   "cmd.open": "打开任务看板",
   "cmd.quickAdd": "快速新建任务",
@@ -694,7 +704,7 @@ const ZH: Partial<typeof EN> = {
   "settings.taskFormatFlavor.name": "任务格式风味",
   "settings.taskFormatFlavor.desc":
     "读取同时兼容 Tasks emoji 与 Dataview inline fields；新的任务元数据写入使用这里选择的风味。",
-  "settings.taskFormatFlavor.tasks": "Tasks emoji：⏳ 📅 ➕ ✅",
+  "settings.taskFormatFlavor.tasks": "Tasks emoji： 📅 ⚓ ➕ ✅",
   "settings.taskFormatFlavor.dataview": "Dataview inline fields：[scheduled::] [due::]",
   "settings.groupTabs": "Query 标签页",
   "settings.groupGeneral": "通用",
@@ -746,10 +756,10 @@ const ZH: Partial<typeof EN> = {
   // task #43: 移动端长按操作面板
   "sheet.markUndone": "↩ 取消完成",
   "sheet.done": "✓ 完成",
-  "sheet.scheduleAt": "⏳ {date}",
+  "sheet.scheduleAt": "📅 {date}",
   "sheet.schedule": "排期",
   "sheet.reschedule": "改期",
-  "sheet.scheduleClear": "⏳ —",
+  "sheet.scheduleClear": "📅 —",
   "sheet.tomorrow": "明天",
   "sheet.nextWeek": "下周",
   "sheet.clearSchedule": "清除排期",
@@ -767,7 +777,7 @@ const ZH: Partial<typeof EN> = {
   "sheet.parentPickerInvalid": "不能选择当前任务或它的后代。",
   "sheet.parentPickerConfirm": "设为「{title}」的子任务",
   "sheet.parentPickerNeedsSelection": "先选择父任务",
-  "sheet.parentPickerEffect": "会清空当前任务自己的 ⏳，并继承父任务排期。",
+  "sheet.parentPickerEffect": "会清空当前任务自己的 📅，并继承父任务排期。",
   "sheet.parentPickerChildren": "{n} 个子任务",
   "sheet.editTag": "编辑 tag",
   "sheet.editSource": "编辑原文",
