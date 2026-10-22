@@ -42,7 +42,7 @@ const EN = {
   "dsl.sort": "{path} must be an array of supported sort tokens.",
   "savedViews.timeDropped": "Dropped",
   "savedViews.dateNotOverdue": "Not overdue (including no deadline)",
-    // in the EN object  
+  // Adding configurable date datum ❬due❭ or ❬scheduled❭
   "settings.primaryDateField.name": "Primary date field",  
   "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
   "settings.primaryDateField.scheduled": "Scheduled (⏳)",  
@@ -567,7 +567,7 @@ const ZH: Partial<typeof EN> = {
   "dsl.sort": "{path} 必须是支持的排序 token 数组。",
   "savedViews.timeDropped": "放弃于",
   "savedViews.dateNotOverdue": "未逾期（含无截止）",
-    // in the EN object  
+  // Adding configurable date datum ❬due❭ or ❬scheduled❭
   "settings.primaryDateField.name": "Primary date field",  
   "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",  
   "settings.primaryDateField.scheduled": "Scheduled (⏳)",  
