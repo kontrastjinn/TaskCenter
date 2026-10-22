@@ -1812,12 +1812,12 @@ export class TaskCenterView extends ItemView {
         // instead of silently no-oping. Inherited schedules cannot be
         // cleared by drag — the user must edit source or move the task
         // out of its parent subtree first.
-        const ownDate = useDeadline ? task?.deadline : task?.scheduled;  
+        const ownDate = useDeadline ? task?.deadline : task?.scheduled;
         if (resolvedDate === null && task && !ownDate) {
           const effectiveTask = this.getEffectiveTasks().find((t) => t.id === id);
           const effDate = useDeadline ? effectiveTask?.effectiveDeadline : effectiveTask?.effectiveScheduled;
           if (effDate) {  
-            new Notice(tr("dnd.inheritedSchedule"), 4000);
+            new Notice(tr(useDeadline ? "dnd.inheritedDeadline" : "dnd.inheritedSchedule"), 4000);
             return;
           }  
         }
