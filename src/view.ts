@@ -1823,7 +1823,7 @@ export class TaskCenterView extends ItemView {
         if (resolvedDate === null && task && !ownDate) {
           const effectiveTask = this.getEffectiveTasks().find((t) => t.id === id);
           const effDate = useDeadline ? effectiveTask?.effectiveDeadline : effectiveTask?.effectiveScheduled;
-          if (effDate) {  
+          if (effDate) {
             new Notice(tr(useDeadline ? "dnd.inheritedDeadline" : "dnd.inheritedSchedule"), 4000);
             return;
           }  
