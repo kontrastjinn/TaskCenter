@@ -319,6 +319,7 @@ export const DEFAULT_SETTINGS: TaskCenterSettings = {
   mobileLongPressMs: 500,
   mobileSwipeEnabled: true,
   mobileForceLayout: false,
+  primaryDateField: "scheduled"
 };
 
 export const VIEW_TYPE_TASK_CENTER = "task-center-board";
