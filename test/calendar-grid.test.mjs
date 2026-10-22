@@ -61,20 +61,20 @@ test("buildWeekDays — 7 consecutive ISO days aligned to weekStartsOn", async (
 // 移动端性能:周/月渲染改为一次分桶(bucketByScheduledDay),替代每天/每格
 // 对全量任务的重复 filter(UX-mobile §13 性能预算)。桶内保序、跳过未排期与
 // 未通过 accept 的任务——语义必须与旧的 per-day filter 完全一致。
-test("bucketByScheduledDay — groups by effectiveScheduled, preserves order, honours accept", async () => {
+test("bucketByScheduledDay — buckets by effectiveDeadline when field is 'deadline'", async () => {  
   const { bucketByScheduledDay } = await mod();
-  const tasks = [
-    { id: "a", effectiveScheduled: "2026-07-01" },
-    { id: "b", effectiveScheduled: "2026-07-02" },
-    { id: "c", effectiveScheduled: "2026-07-01" },
-    { id: "d", effectiveScheduled: null },
-    { id: "e", effectiveScheduled: "2026-07-01" },
+  const tasks = [  
+    { id: "a", effectiveScheduled: "2026-01-01", effectiveDeadline: "2026-07-01" },  
+    { id: "b", effectiveScheduled: "2026-01-01", effectiveDeadline: "2026-07-02" },  
+    { id: "c", effectiveScheduled: "2026-01-01", effectiveDeadline: "2026-07-01" },  
+    { id: "d", effectiveScheduled: "2026-07-01", effectiveDeadline: null },  
+    { id: "e", effectiveScheduled: "2026-01-01", effectiveDeadline: "2026-07-01" },  
   ];
-  const buckets = bucketByScheduledDay(tasks, (t) => t.id !== "c");
-  assert.deepEqual(buckets.get("2026-07-01").map((t) => t.id), ["a", "e"], "filtered + in input order");
+  const buckets = bucketByScheduledDay(tasks, (t) => t.id !== "c", "deadline");
+  assert.deepEqual(buckets.get("2026-07-01").map((t) => t.id), ["a", "e"], "buckets by deadline, filtered + in order");
   assert.deepEqual(buckets.get("2026-07-02").map((t) => t.id), ["b"]);
-  assert.equal(buckets.has("2026-07-03"), false, "days with no tasks have no bucket");
-  assert.equal([...buckets.values()].flat().some((t) => t.id === "d"), false, "unscheduled tasks never bucket");
+  assert.equal(buckets.has("2026-01-01"), false, "scheduled day is ignored in deadline mode");
+  assert.equal([...buckets.values()].flat().some((t) => t.id === "d"), false, "tasks with no deadline never bucket");
 });
 
 test("buildMonthGrid — week-aligned cells covering the whole month", async () => {
