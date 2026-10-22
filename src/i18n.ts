@@ -43,6 +43,8 @@ const EN = {
   "savedViews.timeDropped": "Dropped",
   "savedViews.dateNotOverdue": "Not overdue (including no deadline)",
   // Adding configurable date datum ❬due❭ or ❬scheduled❭
+  "notice.deadline": "Due {date}",
+  "notice.clearedDeadline": "Cleared due date",
   "settings.primaryDateField.name": "Primary date field",
   "settings.primaryDateField.desc": "Which date drag-drop and the Unscheduled bank act on.",
   "settings.primaryDateField.scheduled": "Scheduled (⏳)",
@@ -98,6 +100,8 @@ const EN = {
   "dnd.inheritedSchedule":
     "Schedule is inherited from parent; edit source or move out of parent first.",
   "dnd.droppedUndo": "dropped",
+  "dnd.inheritedDeadline": 
+    "Deadline is inherited from parent; edit source or move out of parent first.",
 
   // US-504: mobile month tab uses calendar-grid + dot density + tap-day
   // inline day panel listing the day's tasks. This empty-state string powers
