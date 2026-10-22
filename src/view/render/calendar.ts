@@ -116,7 +116,7 @@ export function renderWeek(
         text: columnStats(dayTasksRecomputed),
         cls: "bt-week-stats",
       });
-      stats.title = "Scheduled estimate (hours)";
+      stats.title = "Estimate (hours)";
     }
     if (isCompactPointer) renderDeadlineRisk(head, col, dayTasksRecomputed, today);
 
