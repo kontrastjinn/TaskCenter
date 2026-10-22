@@ -31,11 +31,11 @@ export function deadlineRiskStats<T extends {
   return { overdue, nearDeadline };
 }
 
-// Bucket tasks by their effective `⏳` day in ONE pass. The week / month
-// renderers previously ran `tasks.filter(t => t.effectiveScheduled === day)`
-// once per rendered day (7× for week, up to 42× for month) — an O(days × N)
-// sweep that added up on mobile. Tasks failing `accept` or without a
-// scheduled day are skipped; per-day order preserves the input order.
+// Bucket tasks by their effective day for the chosen `field` (⏳ scheduled  
+// or 📅 deadline) in ONE pass. The week / month renderers previously ran  
+// `tasks.filter(...)` once per rendered day (7× week, up to 42× month) — an  
+// O(days × N) sweep that added up on mobile. Tasks failing `accept` or  
+// without a day for that field are skipped; per-day order preserves input order.
 export function bucketByScheduledDay<  
   T extends { effectiveScheduled: string | null; effectiveDeadline: string | null },  
 >(  
