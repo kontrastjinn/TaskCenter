@@ -1821,23 +1821,23 @@ export class TaskCenterView extends ItemView {
             return;
           }  
         }
-        const currentDate = useDeadline ? (task?.deadline ?? null) : (task?.scheduled ?? null);  
-        const willMove = !task || currentDate !== resolvedDate;  
+        const currentDate = useDeadline ? (task?.deadline ?? null) : (task?.scheduled ?? null);
+        const willMove = !task || currentDate !== resolvedDate;
         const work = async () => {  
           const r = useDeadline  
             ? await this.api.deadline(id, resolvedDate)  
-            : await this.api.schedule(id, resolvedDate);  
+            : await this.api.schedule(id, resolvedDate);
           if (!r.unchanged && task) {  
-            const emoji = useDeadline ? "📅" : "⏳";  
+            const emoji = useDeadline ? "📅" : "⏳";
             this.undoStack.push({  
               label: resolvedDate ? `${emoji} ${resolvedDate}` : `${emoji} cleared`,  
               ops: [{ path: task.path, line: task.line, before: [r.before], after: [r.after] }],  
-            });  
+            });
             new Notice(  
               resolvedDate  
                 ? tr(useDeadline ? "notice.deadline" : "notice.scheduled", { date: resolvedDate })  
                 : tr(useDeadline ? "notice.clearedDeadline" : "notice.clearedSchedule"),  
-            );  
+            );
           }  
         };
         try {
