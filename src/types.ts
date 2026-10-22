@@ -192,6 +192,8 @@ export interface DropEffect {
   setStatus?: "dropped" | "done";    // list/grid 状态操作；drop 仅允许 dropped
   setScheduled?: string;    // 写排期 DateToken（week / month 日格隐式用当日）
   clearScheduled?: true;    // tray：清空被拖任务自己行的 ⏳
+  setDeadline?: string;     // 写截止 DateToken（📅）
+  clearDeadline?: true;     // tray：清空被拖任务自己行的 📅
 }
 
 export interface AreaBase {
