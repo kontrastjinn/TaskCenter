@@ -1806,12 +1806,13 @@ export class TaskCenterView extends ItemView {
           return;
         }
         const task = this.tasks.find((t) => t.id === id);
-        const useDeadline = this.settings.primaryDateField === "deadline";
+        const useDeadline = this.plugin.settings.primaryDateField === "deadline";
         // US-122a: when clearing schedule via tray and the task's effective
         // schedule is inherited from a parent (no own ⏳), warn the user
         // instead of silently no-oping. Inherited schedules cannot be
         // cleared by drag — the user must edit source or move the task
-        // out of its parent subtree first.const ownDate = useDeadline ? task?.deadline : task?.scheduled;  
+        // out of its parent subtree first.
+        const ownDate = useDeadline ? task?.deadline : task?.scheduled;  
         if (resolvedDate === null && task && !ownDate) {
           const effectiveTask = this.getEffectiveTasks().find((t) => t.id === id);
           const effDate = useDeadline ? effectiveTask?.effectiveDeadline : effectiveTask?.effectiveScheduled;
