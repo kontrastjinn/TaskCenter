@@ -1806,30 +1806,38 @@ export class TaskCenterView extends ItemView {
           return;
         }
         const task = this.tasks.find((t) => t.id === id);
+        const useDeadline = this.settings.primaryDateField === "deadline";
         // US-122a: when clearing schedule via tray and the task's effective
         // schedule is inherited from a parent (no own ⏳), warn the user
         // instead of silently no-oping. Inherited schedules cannot be
         // cleared by drag — the user must edit source or move the task
-        // out of its parent subtree first.
-        if (resolvedDate === null && task && !task.scheduled) {
+        // out of its parent subtree first.const ownDate = useDeadline ? task?.deadline : task?.scheduled;  
+        if (resolvedDate === null && task && !ownDate) {
           const effectiveTask = this.getEffectiveTasks().find((t) => t.id === id);
-          if (effectiveTask?.effectiveScheduled) {
+          const effDate = useDeadline ? effectiveTask?.effectiveDeadline : effectiveTask?.effectiveScheduled;
+          if (effDate) {  
             new Notice(tr("dnd.inheritedSchedule"), 4000);
             return;
-          }
+          }  
         }
-        const willMove = !task || (task.scheduled ?? null) !== resolvedDate;
-        const work = async () => {
-          const r = await this.api.schedule(id, resolvedDate);
-          if (!r.unchanged && task) {
-            this.undoStack.push({
-              label: resolvedDate ? `⏳ ${resolvedDate}` : "⏳ cleared",
-              ops: [{ path: task.path, line: task.line, before: [r.before], after: [r.after] }],
-            });
-            new Notice(
-              resolvedDate ? tr("notice.scheduled", { date: resolvedDate }) : tr("notice.clearedSchedule"),
-            );
-          }
+        const currentDate = useDeadline ? (task?.deadline ?? null) : (task?.scheduled ?? null);  
+        const willMove = !task || currentDate !== resolvedDate;  
+        const work = async () => {  
+          const r = useDeadline  
+            ? await this.api.deadline(id, resolvedDate)  
+            : await this.api.schedule(id, resolvedDate);  
+          if (!r.unchanged && task) {  
+            const emoji = useDeadline ? "📅" : "⏳";  
+            this.undoStack.push({  
+              label: resolvedDate ? `${emoji} ${resolvedDate}` : `${emoji} cleared`,  
+              ops: [{ path: task.path, line: task.line, before: [r.before], after: [r.after] }],  
+            });  
+            new Notice(  
+              resolvedDate  
+                ? tr(useDeadline ? "notice.deadline" : "notice.scheduled", { date: resolvedDate })  
+                : tr(useDeadline ? "notice.clearedDeadline" : "notice.clearedSchedule"),  
+            );  
+          }  
         };
         try {
           if (willMove) {
