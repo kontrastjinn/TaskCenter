@@ -45,7 +45,8 @@ export function renderWeek(
   const filter = v.getTextFilter();
   const effectiveTasks = v.scopeTasksToArea(v.getEffectiveTasks(), area.when, weekStartsOn);
   // One pass over the task set instead of one full filter per day column.
-  const dayBuckets = bucketByScheduledDay(effectiveTasks, filter);
+  const primaryField = v.plugin.settings.primaryDateField;
+  const dayBuckets = bucketByScheduledDay(effectiveTasks, filter, primaryField);
   const isMobileLayout = v.contentEl.dataset.mobileLayout === "true";
   const isCompactPointer = !isMobileLayout && v.contentEl.dataset.paneLayout !== "wide";
   let selectedDay = v.state.selectedWeekDay;
@@ -182,7 +183,8 @@ export function renderMonth(
   const filter = v.getTextFilter();
   // One pass over the task set instead of one full filter per grid cell
   // (up to 42 cells — the old per-cell sweep was O(cells × N)).
-  const dayBuckets = bucketByScheduledDay(effectiveTasks, filter);
+  const primaryField = v.plugin.settings.primaryDateField;
+  const dayBuckets = bucketByScheduledDay(effectiveTasks, filter, primaryField);
 
   const grid = wrapper.createDiv({ cls: "bt-month-grid" });
   const isMobileLayout = v.contentEl.dataset.mobileLayout === "true";
