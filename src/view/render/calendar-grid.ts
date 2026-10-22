@@ -37,11 +37,11 @@ export function deadlineRiskStats<T extends {
 // O(days × N) sweep that added up on mobile. Tasks failing `accept` or
 // without a day for that field are skipped; per-day order preserves input order.
 export function bucketByScheduledDay<  
-  T extends { effectiveScheduled: string | null; effectiveDeadline: string | null },  
+  T extends { effectiveScheduled: string | null; effectiveDeadline: string | null },
 >(  
-  tasks: T[],  
-  accept: (t: T) => boolean,  
-  field: "scheduled" | "deadline" = "scheduled",  
+  tasks: T[],
+  accept: (t: T) => boolean,
+  field: "scheduled" | "deadline" = "scheduled",
 ): Map<string, T[]> {  
   const buckets = new Map<string, T[]>();
   for (const t of tasks) {  
