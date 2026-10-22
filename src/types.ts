@@ -104,6 +104,7 @@ export interface TaskCenterSettings {
   // layout regardless of width. UX-mobile §7.
   // see USER_STORIES.md
   mobileForceLayout: boolean; // default false (auto = follow platform modality)
+  primaryDateField: "scheduled" | "deadline";
 }
 
 export type TaskFormatFlavor = "tasks" | "dataview";
