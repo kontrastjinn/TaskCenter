@@ -1786,7 +1786,7 @@ export class TaskCenterView extends ItemView {
     this.render();
   }
 
-  makeDropZone(el: HTMLElement, targetDate: string | null) {
+  makeDropZone(el: HTMLElement, targetDate: string | null, field?: "scheduled" | "deadline") {
     el.addEventListener("dragover", (e) => {
       const dt = e.dataTransfer;
       if (!dt || !dt.types.includes("text/task-id")) return;
