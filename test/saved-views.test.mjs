@@ -51,7 +51,8 @@ const {
   restoreBuiltinQueryPresetById,
   restoreBuiltinQueryPresets,
   collectAreas,
-} = await import("../test/.compiled/saved-views.js");
+    remapScheduledToDeadline,
+  } = await import("../test/.compiled/saved-views.js");
 
 // ── US-720d2: 全空布局不再折叠成一个 view 级居中空状态——每个 area 各显示各自
 test("US-109c1 #8/#9: reload preserves mixed tab order and edited builtin layout", () => {
@@ -2079,4 +2080,49 @@ test("US-414: detection is idempotent after a full normalize+ensure pass", () =>
   const migrated = presets.find((p) => p.id === "sv-old-dsl");
   assert.ok(migrated.view.layout, "old DSL view migrated to layout");
   assert.equal(isLegacyQueryPresetShape(migrated), false, "no longer legacy after migration");
+});
+
+
+
+// Preserve the Option-B collision behavior: "unscheduled" overwrites an existing
+// deadline value, and the scheduled property is removed.
+test("Step 6: remapScheduledToDeadline — tray scheduled→deadline conversion", () => {
+  const tray = {
+    type: "grid",
+    id: "unscheduled-tray",
+    when: { time: { scheduled: "unscheduled" }, status: ["todo"] },
+    onDrop: { clearScheduled: true },
+  };
+  const out = remapScheduledToDeadline(tray);
+  assert.equal(out.when.time.scheduled, undefined, "scheduled key removed");
+  assert.equal(out.when.time.deadline, "unscheduled", "deadline key added");
+  assert.deepEqual(out.onDrop, { clearDeadline: true }, "onDrop remapped");
+  // purity: original untouched
+  assert.equal(tray.when.time.scheduled, "unscheduled");
+  assert.deepEqual(tray.onDrop, { clearScheduled: true });
+});
+
+// Nodes without a scheduled "unscheduled" bank remain structurally unchanged.
+// Use deep equality because the remapper returns cloned nodes.  
+test("Step 6: remapScheduledToDeadline — today.json collision overwrites deadline", () => {
+  const area = {
+    type: "list",
+    when: { status: ["todo"], time: { scheduled: "unscheduled", deadline: "not-overdue" } },
+  };
+  const out = remapScheduledToDeadline(area);
+  assert.equal(out.when.time.scheduled, undefined);
+  assert.equal(out.when.time.deadline, "unscheduled", "pre-existing not-overdue is overwritten");
+});
+
+// The remapper must not mutate its input; verify the original tree is unchanged.
+test("Step 6: remapScheduledToDeadline — identity for areas without scheduled:unscheduled", () => {
+  const layout = {
+    dir: "col",
+    children: [
+      { type: "week" },
+      { type: "list", when: { time: { deadline: "overdue" } }, onDrop: { setStatus: "done" } },
+    ],
+  };
+  const out = remapScheduledToDeadline(layout);
+  assert.deepEqual(out, layout, "tree structurally unchanged when no scheduled bank present");
 });
