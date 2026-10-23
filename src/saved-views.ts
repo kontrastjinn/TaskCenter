@@ -425,6 +425,14 @@ function validateLayoutNode(raw: unknown, errors: QueryPresetValidationError[], 
   }
 }
 
+/** 深度优先收集布局树里所有 area 叶子（顺序 = 渲染顺序）。 */
+export function collectAreas(layout: LayoutNode): AreaConfig[] {
+  if (isStackLayout(layout)) {
+    return layout.children.flatMap((c) => collectAreas(c));
+  }
+  return [layout];
+}
+
 // Recursively clone the layout, remapping the "unscheduled bank" semantics
 // from scheduled → deadline so the bank reflects missing DUE dates when
 // primaryDateField === "deadline". Pure; returns a new tree.
