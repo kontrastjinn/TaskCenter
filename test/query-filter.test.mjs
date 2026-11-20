@@ -8,9 +8,9 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/query/filter.ts",
       "--bundle",
       "--format=esm",

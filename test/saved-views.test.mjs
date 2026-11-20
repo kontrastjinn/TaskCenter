@@ -6,9 +6,9 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/saved-views.ts",
       "--alias:obsidian=./test/obsidian-stub.mjs",
       "--bundle=true",

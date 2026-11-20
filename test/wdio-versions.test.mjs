@@ -8,9 +8,9 @@ import { spawnSync } from "node:child_process";
 
 before(() => {
 const r = spawnSync(
-  process.platform === "win32" ? "npx.cmd" : "npx",
-  [
-    "esbuild",  
+    process.execPath,
+    [
+      "node_modules/esbuild/bin/esbuild",  
     "wdio-versions.mts",
     "--bundle=false",
     "--format=esm",

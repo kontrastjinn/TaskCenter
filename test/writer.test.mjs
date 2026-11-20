@@ -8,9 +8,9 @@ import { spawnSync } from "node:child_process";
 // Compile writer.ts as a self-contained ESM bundle with obsidian stubbed out.
 function compile() {
   const result = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/writer.ts",
       "--bundle",
       "--format=esm",

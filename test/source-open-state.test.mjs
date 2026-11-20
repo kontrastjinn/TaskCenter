@@ -4,9 +4,9 @@ import test from "node:test";
 
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/view/source-open-state.ts",
       "--bundle=false",
       "--format=esm",

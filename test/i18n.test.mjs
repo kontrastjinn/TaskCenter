@@ -21,9 +21,9 @@ globalThis.window = {
 
 before(() => {
   const r = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/i18n.ts",
       "--bundle",
       "--format=esm",

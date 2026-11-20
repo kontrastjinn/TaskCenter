@@ -7,9 +7,9 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const r = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/view/render/calendar-grid.ts",
       "--bundle=true",
       "--format=esm",

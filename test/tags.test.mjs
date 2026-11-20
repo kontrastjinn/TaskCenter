@@ -6,9 +6,9 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const result = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",
+    process.execPath,
     [
-      "esbuild",
+      "node_modules/esbuild/bin/esbuild",
       "src/tags.ts",
       "--bundle=false",
       "--format=esm",

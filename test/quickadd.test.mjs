@@ -20,9 +20,9 @@ function compile() {
   for (const entry of ["src/quickadd.ts", "src/dateprompt.ts"]) {
     const out = `test/.compiled/${entry.split("/")[1].replace(".ts", ".bundle.js")}`;
     const r = spawnSync(
-      process.platform === "win32" ? "npx.cmd" : "npx",
-      [
-        "esbuild",
+    process.execPath,
+    [
+      "node_modules/esbuild/bin/esbuild",
         entry,
         "--bundle",
         "--format=esm",
