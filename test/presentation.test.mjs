@@ -2,10 +2,18 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 
-const result = spawnSync(  process.platform === "win32" ? "npx.cmd" : "npx", [
-  "esbuild", "src/view/presentation.ts", "--bundle=true", "--format=esm",
-  "--platform=node", "--outdir=test/.compiled", "--loader:.ts=ts",
-], { cwd: process.cwd(), stdio: "pipe", encoding: "utf8" });
+const result = spawnSync(
+  process.platform === "win32" ? "npx.cmd" : "npx",
+  [
+    "esbuild",
+    "src/view/presentation.ts",
+    "--bundle=true",
+    "--format=esm",
+    "--platform=node",
+    "--outdir=test/.compiled",
+    "--loader:.ts=ts",
+  ],
+  { cwd: process.cwd(), stdio: "pipe", encoding: "utf8" });
 if (result.status !== 0) throw new Error(`esbuild compile failed:\n${result.stderr}`);
 
 const mod = () => import("../test/.compiled/presentation.js");
