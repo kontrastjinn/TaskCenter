@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 
-const result = spawnSync("npx", [
+const result = spawnSync(  process.platform === "win32" ? "npx.cmd" : "npx", [
   "esbuild", "src/view/presentation.ts", "--bundle=true", "--format=esm",
   "--platform=node", "--outdir=test/.compiled", "--loader:.ts=ts",
 ], { cwd: process.cwd(), stdio: "pipe", encoding: "utf8" });
