@@ -4,7 +4,7 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const result = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",  
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "wdio-local-guard.mts",
