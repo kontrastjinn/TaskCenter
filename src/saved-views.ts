@@ -442,7 +442,7 @@ export function remapScheduledToDeadline(node: LayoutNode): LayoutNode {
   }
   const area = { ...node } as AreaConfig;
   // 1. when.time: scheduled: "unscheduled" → deadline: "unscheduled"
-  if (area.when?.time?.scheduled === "unscheduled") {
+  if ("when" in area && area.when?.time?.scheduled === "unscheduled") {
     const time = { ...area.when.time };
     delete time.scheduled;
     time.deadline = "unscheduled";              // see collision caveat below
