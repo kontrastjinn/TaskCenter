@@ -440,7 +440,7 @@ export function remapScheduledToDeadline(node: LayoutNode): LayoutNode {
   if (isStackLayout(node)) {
     return { ...node, children: node.children.map(remapScheduledToDeadline) };
   }
-  const area = { ...node } as AreaConfig;
+  const area = { ...node };
   // 1. when.time: scheduled: "unscheduled" → deadline: "unscheduled"
   if ("when" in area && area.when?.time?.scheduled === "unscheduled") {
     const time = { ...area.when.time };
