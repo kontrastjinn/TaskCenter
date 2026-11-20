@@ -11,7 +11,7 @@ import { spawnSync } from "node:child_process";
 // Compile the parser + dates to a small ESM bundle for the test run.
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/parser.ts",
