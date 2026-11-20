@@ -20,7 +20,7 @@ function compile() {
   for (const entry of ["src/quickadd.ts", "src/dateprompt.ts"]) {
     const out = `test/.compiled/${entry.split("/")[1].replace(".ts", ".bundle.js")}`;
     const r = spawnSync(
-      "npx",
+      process.platform === "win32" ? "npx.cmd" : "npx",
       [
         "esbuild",
         entry,
