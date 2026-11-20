@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 // imported on their own, mirroring layout.test.mjs.
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/view/area-accordion.ts",
