@@ -28,7 +28,7 @@ import { spawnSync } from "node:child_process";
 
 function esbuild(entry, outfile) {
   const r = spawnSync(
-    process.platform === "win32" ? "npx.cmd" : "npx",  
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       entry,
