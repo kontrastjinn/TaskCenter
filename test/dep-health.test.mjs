@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 
 function compileDepHealth() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/dep-health.ts",
