@@ -51,7 +51,7 @@ if (typeof HTMLElement === "undefined") {
 
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/view/filter-popover.ts",
