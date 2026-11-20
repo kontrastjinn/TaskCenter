@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 
 function compile() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/query/tag-expr.ts",
