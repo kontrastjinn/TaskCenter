@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 
 function compilePure() {
   const result = spawnSync(
-    "npx",
+    process.platform === "win32" ? "npx.cmd" : "npx",
     [
       "esbuild",
       "src/saved-views.ts",
