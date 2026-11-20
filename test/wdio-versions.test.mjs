@@ -7,19 +7,19 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 
 before(() => {
-  const r = spawnSync(
-    "npx",
-    [
-      "esbuild",
-      "wdio-versions.mts",
-      "--bundle=false",
-      "--format=esm",
-      "--platform=node",
-      "--outdir=test/.compiled",
-      "--loader:.mts=ts",
-    ],
-    { cwd: process.cwd(), stdio: "pipe", encoding: "utf8" },
-  );
+const r = spawnSync(
+  process.platform === "win32" ? "npx.cmd" : "npx",
+  [
+    "esbuild",  
+    "wdio-versions.mts",
+    "--bundle=false",
+    "--format=esm",
+    "--platform=node",
+    "--outdir=test/.compiled",
+    "--loader:.mts=ts",
+  ],
+  { cwd: process.cwd(), stdio: "pipe", encoding: "utf8" },
+);
   if (r.status !== 0) throw new Error("esbuild failed:\n" + r.stderr);
 });
 
