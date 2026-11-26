@@ -125,7 +125,8 @@ export function renderWeek(
     // inner list. The column is the published e2e drop target; if the
     // handler lives on a child the synthesized drop event from
     // `simulateDrag()` never reaches it.
-    v.makeDropZone(col, day);
+    v.makeDropZone(col, day, primaryField);   // week
+    v.makeDropZone(cell, day, primaryField);  // month
     // Compact date keys are navigation/drop targets only. Rendering hidden
     // full cards here would duplicate task IDs and make automation/keyboard
     // selection hit an invisible copy before the visible outline card.
