@@ -227,17 +227,16 @@ export interface GridAreaConfig extends AreaBase, ListLikeFields {
 
 export interface WeekAreaConfig extends AreaBase {
   type: "week";
-  // US-109z2: date areas carry their own `when` too, so filtering is always
-  // per-area (there is no tab-level base filter anymore). e.g. a week view that
-  // only shows todo tasks sets `when: { status: ["todo"] }`.
   when?: QueryPresetFilters;
   firstDayOfWeek?: "monday" | "sunday";
+  dateField?: "scheduled" | "deadline";  // overrides global primaryDateField for this area
 }
-
+  
 export interface MonthAreaConfig extends AreaBase {
   type: "month";
   when?: QueryPresetFilters;
   firstDayOfWeek?: "monday" | "sunday";
+  dateField?: "scheduled" | "deadline";
 }
 
 // drop：纯动作落区，无 query；onDrop 必填。放弃区就是 drop area。
