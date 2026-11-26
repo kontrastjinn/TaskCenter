@@ -126,7 +126,6 @@ export function renderWeek(
     // handler lives on a child the synthesized drop event from
     // `simulateDrag()` never reaches it.
     v.makeDropZone(col, day, primaryField);   // week
-    v.makeDropZone(cell, day, primaryField);  // month
     // Compact date keys are navigation/drop targets only. Rendering hidden
     // full cards here would duplicate task IDs and make automation/keyboard
     // selection hit an invisible copy before the visible outline card.
@@ -221,7 +220,7 @@ export function renderMonth(
     }
     if (isCompactPointer) renderDeadlineRisk(head, cell, dayTasksRecomputed, today);
     const list = cell.createDiv({ cls: "bt-month-cell-list" });
-    v.makeDropZone(cell, day);
+    v.makeDropZone(cell, day, primaryField);  // month
     // A condensed month cell is navigation + a drop target, not a hidden
     // second task surface. Mount cards only in the selected-day outline so
     // task IDs and keyboard/pointer targets stay unique (US-515).
