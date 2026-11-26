@@ -393,10 +393,7 @@ function validateLayoutNode(raw: unknown, errors: QueryPresetValidationError[], 
     validationIssue(errors, `${path}.type`, "areaType", "unknown_area_type");
     return;
   }
-  const fields = ["type", "id", "title", "weight", "when", "onDrop", "firstDayOfWeek", "density", "emptyText", "limit", "orderBy"];
-  for (const key of Object.keys(raw)) {
-    if (!fields.includes(key)) validationIssue(errors, `${path}.${key}`, "unsupported");
-  }
+  const fields = ["type", "id", "title", "weight", "when", "onDrop", "firstDayOfWeek", "dateField", "density", "emptyText", "limit", "orderBy"];  
   for (const key of ["id", "title", "emptyText"]) {
     if (raw[key] !== undefined && typeof raw[key] !== "string") validationIssue(errors, `${path}.${key}`, "string");
   }
@@ -410,8 +407,8 @@ function validateLayoutNode(raw: unknown, errors: QueryPresetValidationError[], 
   else if (raw.onDrop !== undefined) for (const issue of validateAreaDrop(type, raw.onDrop)) {
     validationIssue(errors, `${path}.${issue.field}`, issue.rule, "invalid_on_drop");
   }
-  if (raw.firstDayOfWeek !== undefined && (!["week", "month"].includes(type) || (raw.firstDayOfWeek !== "monday" && raw.firstDayOfWeek !== "sunday"))) {
-    validationIssue(errors, `${path}.firstDayOfWeek`, "weekStart");
+  if (raw.dateField !== undefined && (!["week", "month"].includes(type) || (raw.dateField !== "scheduled" && raw.dateField !== "deadline"))) {
+    validationIssue(errors, `${path}.dateField`, "dateField");
   }
   if (raw.density !== undefined) validationIssue(errors, `${path}.density`, "unsupported");
   if (raw.emptyText !== undefined && type !== "list" && type !== "grid") validationIssue(errors, `${path}.emptyText`, "unsupported");
