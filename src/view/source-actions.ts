@@ -93,6 +93,18 @@ export function openContextMenu(v: TaskCenterView, e: MouseEvent, task: Effectiv
     }),
   );
   m.addItem((i) =>
+    i.setTitle(tr("ctx.clearSchedule")).onClick(async () => {
+      if (task.scheduled) {
+        await v.runWithRemoveAnim(task.id, async () => {
+          const result = await v.api.schedule(task.id, null);
+          v.recordUndoableWrite("clear schedule", task, result);
+        });
+      } else {
+        v.scheduleRefresh();
+      }
+    }),
+  );
+  m.addItem((i) =>
     i.setTitle(tr("ctx.deadlineToday")).onClick(async () => {
       const target = todayISO();
       if ((task.deadline ?? null) !== target) {
@@ -105,8 +117,31 @@ export function openContextMenu(v: TaskCenterView, e: MouseEvent, task: Effectiv
       }
     }),
   );
-  // same shape for ctx.deadlineTomorrow (addDays(todayISO(), 1))
-  // and ctx.clearDeadline (api.deadline(task.id, null), guarded on task.deadline)
+  m.addItem((i) =>
+    i.setTitle(tr("ctx.deadlineTomorrow")).onClick(async () => {
+      const target = addDays(todayISO(), 1);
+      if ((task.deadline ?? null) !== target) {
+        await v.runWithRemoveAnim(task.id, async () => {
+          const result = await v.api.deadline(task.id, target);
+          v.recordUndoableWrite("deadline", task, result);
+        });
+      } else {
+        v.scheduleRefresh();
+      }
+    }),
+  );
+  m.addItem((i) =>
+    i.setTitle(tr("ctx.clearDeadline")).onClick(async () => {
+      if (task.deadline) {
+        await v.runWithRemoveAnim(task.id, async () => {
+          const result = await v.api.deadline(task.id, null);
+          v.recordUndoableWrite("clear deadline", task, result);
+        });
+      } else {
+        v.scheduleRefresh();
+      }
+    }),
+  );
   m.addItem((i) =>
     i.setTitle(tr("ctx.drop")).onClick(async () => {
       await v.runWithRemoveAnim(task.id, async () => {
