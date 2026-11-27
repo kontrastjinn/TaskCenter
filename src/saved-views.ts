@@ -256,6 +256,8 @@ function normalizeDropEffect(raw: unknown): DropEffect | undefined {
   if (raw.setStatus === "dropped" || raw.setStatus === "done") out.setStatus = raw.setStatus;
   if (typeof raw.setScheduled === "string" && raw.setScheduled.trim()) out.setScheduled = raw.setScheduled.trim();
   if (raw.clearScheduled === true) out.clearScheduled = true;
+  if (typeof raw.setDeadline === "string" && raw.setDeadline.trim()) out.setDeadline = raw.setDeadline.trim();
+  if (raw.clearDeadline === true) out.clearDeadline = true;
   return Object.keys(out).length > 0 ? out : undefined;
 }
 
